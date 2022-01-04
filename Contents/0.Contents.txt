@@ -1,0 +1,19 @@
+Contents
+Handling following WebElements
+==============================
+
+1. Handling Dyanamic Elements (Dynamic Webtable)
+2. Handling Autosuggetions
+3. Handling List Boxes
+4. Handling customized listbox
+5. Handling dropdown  (Action Class-- Keyboard and mouse action)
+6. Authontication PopUp
+7. File download popup
+8. Handling IFrame
+9. Handling Nested IFrame
+10. Parameterization -- Handling Excel Sheet
+11. Taking Screenshots
+12. AutoIT 
+
+
+=========================================================
