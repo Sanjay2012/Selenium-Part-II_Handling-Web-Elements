@@ -1,0 +1,131 @@
+Agenda:
+=======================
+# Handling customized Listbox (without select tag)
+1. using keyboard actions
+2. using sendkeys+ keyboard actions
+
+-----------------------------------------
+
+# Handling the dropdown
+-hover
+- options will be displayed if we move mouse pointer on element that options are known as dropdown
+- mouse hover the element
+- Actions class
+- e.g WAS to click on login button in yatra.com (directly)
+  ** It not work since element is not visible
+  ** Element not visible exception
+
+- e.g script to find travel agent
+  ** It not work since element is not visible
+  ** Element not visible exception
+
+- so we can handle such dropdowns using "Action class"
+
+# Procedure:
+1. identify the element & store it in ref variable
+2. Create the object of actions class "werdriver arg" as an input
+3. By using actions class methods handle dropdown
+
+---------------------------------------------------------
+WAS to click on login button in yatra.com
+
+package handlingDropdown;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class ClickLoginButton {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.yatra.com/");
+		driver.manage().window().maximize();
+		
+		 //identify the element & store it in ref variable
+		WebElement myAccount = driver.findElement(By.xpath("//a[contains(text(),'My Account')]"));
+		//myAccount.click();
+		
+		//Create the object of actions class "werdriver arg" as an input
+		
+		Actions action=new Actions(driver);
+		
+		action.moveToElement(myAccount).perform();
+		
+//		WebElement loginButton = driver.findElement(By.xpath("//a[@title=\"Login\"]"));
+//		loginButton.click();
+		
+		
+		WebElement agent = driver.findElement(By.xpath("//a[@title=\"Yatra for Travel Agents\"]"));
+		agent.click();
+		
+		
+		
+	}
+
+}
+=======================================================
+# Methods available in Actions class:
+
+1. moveToElement()
+2. click()
+3. built()
+4. perform()
+5. clickAndHold()
+6. doubleClick()
+7. DragAndDrop()
+8. KeyDown()
+9. KeyUp
+10. pause
+11. release()
+12. sendkeys()
+13. contextClick()
+-----------------------------------
+
+click()--> left click mouse action
+contextClick()---> right click mouse action
+
+# perform click() action on webelement
+
+
+package handlingDropdown;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class LeftClick {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.browserstack.com/");
+		driver.manage().window().maximize();
+		
+		WebElement prizing = driver.findElement(By.xpath("//a[@title=\"Pricing\"]"));
+		
+		//create object of actions class
+		
+		Actions act=new Actions(driver);
+		act.moveToElement(prizing).click().perform();
+	}
+}
+----------------------------------------
+Practice Actions class methods on below site:
+https://www.browserstack.com/
+----------------------
+
+- velocity
+- charts (burnup/burndown etc)
+
+
+
+
+

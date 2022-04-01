@@ -1,0 +1,43 @@
+package webtable;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class GetTextFromTable {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("file:///D:/MindMAPS/Automation/WebTable.html");
+		driver.manage().window().maximize();
+		
+		List<WebElement> rows = driver.findElements(By.xpath("//table[@id=\"1234\"]/tbody/tr"));
+		int tableRowCount = rows.size();
+		
+		
+		String expexted = "manual";
+		
+		for (int i = 2; i <=tableRowCount; i++) {
+			
+			String actText = driver.findElement(By.xpath("//table[@id=\"1234\"]/tbody/tr["+i+"]/td[2]")).getText();
+			System.out.println(actText);
+			
+			if (expexted.equalsIgnoreCase(actText)) {
+				
+				break;
+			}
+			
+
+		}
+		
+		
+		driver.quit();
+
+	}
+
+}

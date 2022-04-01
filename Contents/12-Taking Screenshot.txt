@@ -1,0 +1,94 @@
+1. Conti--Pop Ups
+2. Screenshot
+-----------------------------
+# Methods:
+- close():use to close parent browser
+- quite():it will close both parent and child browser
+-------------------------
+#try for confirmation pop up
+
+Que: what happens if we try to handle cancel button present in other page using alert popup
+==> no alert present exeption
+
+Que: What happens if we perform actions without handling alert pop up
+==> UnhandledAlertException
+-------------------------------------
+- how to print the titles of parent and child browsers
+
+Set<String> ids = driver.getWindowHandles();
+		for (String str : ids) {
+			driver.switchTo().window(str);
+			System.out.println(driver.getTitle());
+			
+		}
+
+-------------------------------------
+# Authentication popup
+
+https://the-internet.herokuapp.com/basic_auth
+
+https://admin:admin@the-internet.herokuapp.com/basic_auth
+
+------------------------------------------
+
+# Screenshort
+-------------
+-TakeScreenshot--> interface
+- First we need to type caste driver object into TakeScreenshot
+ex. ((TakeScreenshot)driver)
+- we need to call the function "getScreenShotAs"-- here we need to pass the arguement "outputType.File"
+File src=((TakeScreenshot)driver).getScreenShotAs(outputType.File)
+
+- this method will return object type as File
+- When above method is executed screenshot is ready but it is in memory 
+- To store screenshot in local , we need to call a method "copy(source, dest)"
+- copy method is available in "FileHandler class"
+
+-FileHandler.copy(source, dest)
+=============================================
+package screenshot;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.io.FileHandler;
+
+import net.bytebuddy.utility.RandomString;
+
+public class TakeScreenshots {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://demoqa.com/alerts");
+		driver.manage().window().maximize();
+		
+		File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+		//File dest=new File("D:\\MindMAPS\\Automation\\error1.jpg");
+		
+		String str = RandomString.make(4);
+		File dest=new File("D:\\MindMAPS\\Automation\\error"+str+".jpg");
+		
+		FileHandler.copy(source, dest);
+		
+		driver.quit();
+	}
+
+
+}
+
+
+
+
+
+
+
+
+

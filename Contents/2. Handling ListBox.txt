@@ -1,3 +1,15 @@
+Sites:
+
+https://www.facebook.com
+https://www.selecthub.com
+https://testproject.io
+https://www.flipkart.com/
+https://www.goibibo.com
+https://techcanvass.com/Examples/multi-select.html
+
+
+
+========================================================
 Handling Listbox
 =================================
 1. Identify the listbox which need to handle and store in rference variable

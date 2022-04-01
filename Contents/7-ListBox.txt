@@ -1,0 +1,273 @@
+Agenda:
+---------------------
+Handle the Listbox:
+-------------------
+- two kind listbox
+1. with select tag
+2. without select tag ---> customemised
+
+--------------------------------------------
+Approaches to handle listbox:
+1. Using keyboard action: keys.ArrowUp, keys.Enter
+2. sendkeys + keyboard action
+3. using select class (listbox is designed using select tag)
+
+==============================================
+# Select class:
+-------------------
+- select class contain single arg constructor which takes webelemnt as an arg
+- to select the options from listb by using this select class we have 3 methods
+1. selectByIndex()-- pass int as an arg
+2. selectByValue()-- pass string as an arg
+3. selectByVisibleText()--pass string as an arg
+
+#Procedure:
+1. identify list box/element which need to handle & need to store it in ref variable
+2. create an object of select class with single arg constructor
+3. use any one select class method to select option from listbox
+
+-----------------------------------
+Ex. WAS to enter date of birth in facebook registraion scenario
+
+package handlingListbox;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class MethodsOfSelectClass {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.facebook.com/");
+		driver.manage().window().maximize();
+
+		driver.findElement(By.xpath("//a[@class=\"_42ft _4jy0 _6lti _4jy6 _4jy2 selected _51sy\"]")).click();
+		
+		Thread.sleep(5000);
+		
+		//1. identify list box/element which need to handle & need to store it in ref variable
+		
+		WebElement month = driver.findElement(By.xpath("//select[@id=\"month\"]"));
+		WebElement day = driver.findElement(By.xpath("//select[@id=\"day\"]"));
+		WebElement year = driver.findElement(By.xpath("//select[@id=\"year\"]"));
+		
+		
+		//2. create an object of select class with single arg constructor
+		Select d=new Select(day);
+		Select m=new Select(month);
+		Select y=new Select(year);
+		
+		
+		
+		// Select by date using-- selctByValue()
+		
+		d.selectByValue("10");
+		
+		Thread.sleep(3000);
+		
+		//Select month using --> selectByIndex()
+		
+		m.selectByIndex(11);
+		
+		Thread.sleep(3000);
+		
+		// select year using --- selectByVisisblText()
+		y.selectByVisibleText("1990");
+		
+		Thread.sleep(3000);
+
+
+	}
+
+}
+---------------------------------------------------------------
+
+# Methods of select class
+-----------------------------
+-- collection/iterators        i/p-arg/ return type
+
+1. deselectAll()
+2. deselectByIndex() 		-- int
+3. deselectByValue()		-- string
+4. deselectByVisibleText()	-- string
+5. selectByIndex() 		-- int
+6. selectByValue()		-- string
+7. selectByVisibleText()	-- string
+8. getAllSelectedOptions()	-- List<WebElement>
+9. getFirstSelectedOption()     --return--WebElemnt/single
+10. getOptions()		--return--List<WebElermnts>
+11. isMultiple()		-- return--> Boolean
+
+- single selectable/ multiselectable
+if single seletable-- return type false
+if multiselectable -- return true
+--------------------------------
+Note:if u use deselect option in sigle seletable listbox--->unsuported opretion exception
+     if no option selected in multi selectable Listbox & u are using deselect option method--->
+       throw an exception
+
+
+-------------------
+Que: if we try to select any option present in customized listbox using select class
+- unexpected technique exception  
+
+====================================
+1. getOptions()
+// print the size of listbox:
+- get size
+- print all options
+
+package handlingListbox;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class GetSize {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.facebook.com/");
+		driver.manage().window().maximize();
+
+		driver.findElement(By.xpath("//a[@class=\"_42ft _4jy0 _6lti _4jy6 _4jy2 selected _51sy\"]")).click();
+		
+		Thread.sleep(5000);
+		
+		//1. identify list box/element which need to handle & need to store it in ref variable
+		
+		WebElement month = driver.findElement(By.xpath("//select[@id=\"month\"]"));
+
+		
+		//2. create an object of select class with single arg constructor
+		Select m=new Select(month);
+		
+		List<WebElement> allOptions = m.getOptions();
+		System.out.println(allOptions.size());
+		
+		
+		// for loop
+		
+		System.out.println("Printing listbox options using for loop");
+		
+		for (int i = 0; i <=allOptions.size()-1; i++) {
+			
+			System.out.println(allOptions.get(i).getText());
+			
+		}
+		
+		// for each loop
+		System.out.println("Printing listbox options using for each loop");
+		for (WebElement ele : allOptions) {
+			System.out.println(ele.getText());
+		}
+		
+		
+		// using iterator
+		System.out.println("Printing listbox options using for iterator");
+		Iterator<WebElement> itr = allOptions.iterator();
+		while (itr.hasNext()) {
+			System.out.println(itr.next().getText());
+			
+		}
+		
+		
+		driver.close();
+	}
+
+}
+----------------------------------------------------------------
+2. isMultiple();
+
+package handlingListbox;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class IsMultiple {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.facebook.com/");
+		driver.manage().window().maximize();
+
+		driver.findElement(By.xpath("//a[@class=\"_42ft _4jy0 _6lti _4jy6 _4jy2 selected _51sy\"]")).click();
+		
+		Thread.sleep(5000);
+		
+		//1. identify list box/element which need to handle & need to store it in ref variable
+		
+		WebElement month = driver.findElement(By.xpath("//select[@id=\"month\"]"));
+
+		
+		//2. create an object of select class with single arg constructor
+		Select m=new Select(month);
+		
+		boolean result = m.isMultiple();
+		System.out.println("The status of month listbox for multiselectable is: "+result);
+		
+		driver.quit();
+
+	}
+	
+
+}
+------------------------------------
+3. getFirstSelectedOption()
+
+package handlingListbox;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class GetSelectedOption {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://www.facebook.com/");
+		driver.manage().window().maximize();
+
+		driver.findElement(By.xpath("//a[@class=\"_42ft _4jy0 _6lti _4jy6 _4jy2 selected _51sy\"]")).click();
+		
+		Thread.sleep(5000);
+		
+		//1. identify list box/element which need to handle & need to store it in ref variable
+		
+		WebElement month = driver.findElement(By.xpath("//select[@id=\"month\"]"));
+
+		
+		//2. create an object of select class with single arg constructor
+		Select m=new Select(month);
+		WebElement selectedOption = m.getFirstSelectedOption();
+		System.out.println("The first selected option from month listbos is:  "+selectedOption.getText());
+		
+		driver.quit();
+
+	}
+
+}
+-----------------------------------------
+
+# Handling customized listbox

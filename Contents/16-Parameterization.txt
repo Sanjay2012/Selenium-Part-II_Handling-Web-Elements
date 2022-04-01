@@ -1,0 +1,134 @@
+Parameterisation
+=========================
+- Whatever the data we passing directly into script --> hard coded data
+- Featchig the data from external source and use it into selenium script (ts) 
+- ways
+1. excel sheet
+2. csv file
+3. tesTG data provider
+
+==============================
+1. excel sheet
+
+- apache poi jar
+- import into project library
+- read/ write
+- read---> FileInputStram (class)
+- write--> FileOutputStream (class)
+------------------------------------------
+Procedure to handle excell sheet
+
+1.  configure apaqche poi jar into our project
+2.  create excel sheet with some data and  keep it into any folder
+3.  create object for FileInputStram (class) with excel sheet path
+4.  to open excel shhet we need to use static method -- create ----> workbookFactory (class)
+5. to open specific sheet in excel we need to use getsheet()   method
+6. identify row/ reading row---> getrow()
+7. identify cell  --> getcell()
+8. we need use getStringValue()/ getNumericValue()--- methods
+
+
+=========================================
+# Write a selenium script to fetch data from excel sheet
+
+package parameterization;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+public class ReadCellValue {
+
+	public static void main(String[] args) throws EncryptedDocumentException, IOException {
+		
+		FileInputStream file=new FileInputStream("D:\\MindMAPS\\Automation\\data.xlsx");
+		
+		Workbook method = WorkbookFactory.create(file);
+		Sheet openSpecificSheet = method.getSheet("Sheet1");
+		
+		Row rowNo = openSpecificSheet.getRow(1);
+		Cell colNo = rowNo.getCell(0);
+		String value =colNo.getStringCellValue();
+		
+		// alternate way
+		
+		//String value = WorkbookFactory.create(file).getSheet("Sheet1").getRow(1).getCell(0).getStringCellValue();
+		
+		System.out.println(value);
+
+	}
+
+}
+
+==============
+
+- getLastRowNum()
+- grtLastCellNum()
+
+
+# to get total cell numbers
+
+package parameterization;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+public class PrintRowCount {
+
+	public static void main(String[] args) throws EncryptedDocumentException, IOException {
+		
+FileInputStream file=new FileInputStream("D:\\MindMAPS\\Automation\\data.xlsx");
+		
+		Workbook method = WorkbookFactory.create(file);
+		Sheet openSpecificSheet = method.getSheet("Sheet1");
+		
+		int lastRowNo = openSpecificSheet.getLastRowNum();
+		
+		System.out.println(lastRowNo);
+
+	}
+
+}
+-----------------------------------------------------------------
+# count cell count from rows
+
+package parameterization;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+
+public class CheckNoofCellIRow {
+
+	public static void main(String[] args) throws EncryptedDocumentException, IOException {
+		
+FileInputStream file=new FileInputStream("D:\\MindMAPS\\Automation\\data.xlsx");
+		
+	 short lastCellNo = WorkbookFactory.create(file).getSheet("Sheet1").getRow(1).getLastCellNum();
+	 System.out.println(lastCellNo);
+		
+
+	}
+
+}
+
+
+
+

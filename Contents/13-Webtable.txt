@@ -1,0 +1,117 @@
+Handling WebTable
++++++++++++++++++
+Users         Admin
+-------------------
+Approved
+Rejected
+
+----------------
+table
+tbody--> whole table
+<td>--> defines the std cell in a table which displayed as normal weigth , left aligned
+<tr>--> table rows
+<th>--> header cells
+--------------------------
+# Get row count from webtable
+package webtable;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class GetRowCount {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("file:///D:/MindMAPS/Automation/WebTable.html");
+		driver.manage().window().maximize();
+
+		List<WebElement> rows = driver.findElements(By.xpath("//table[@id=\"1234\"]/tbody/tr"));
+		int tableRowCount = rows.size();
+		System.out.println("Total No of rows in table= " + tableRowCount);
+
+	}
+
+}
+=============================
+# get column count
+
+package webtable;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class GetColumnCount {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("file:///D:/MindMAPS/Automation/WebTable.html");
+		driver.manage().window().maximize();
+
+		List<WebElement> columns = driver.findElements(By.xpath("//table[@id=\"1234\"]/tbody/tr[2]/td"));
+
+		int tableCoulumnCount = columns.size();
+
+		System.out.println("Toatl columns in table are: " + tableCoulumnCount);
+
+	}
+
+}
+======================================
+package webtable;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class GetTextFromTable {
+
+	public static void main(String[] args) {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("file:///D:/MindMAPS/Automation/WebTable.html");
+		driver.manage().window().maximize();
+		
+		
+		String expexted = "Java";
+		String actText = driver.findElement(By.xpath("//table[@id=\"1234\"]/tbody/tr[4]/td[2]")).getText();
+		System.out.println(actText);
+		
+		if (expexted.equals(actText)) {
+			System.out.println("found");
+			
+		}
+		else {
+			System.out.println("Not found");
+		}
+		
+		driver.quit();
+
+	}
+
+}
+=====================================
+Task1: validate the cell value from webtable using loop
+Task2:
+Test Case - Automate User Registration process of e-commerce website.
+Steps to Automate:
+1. Open this url  http://automationpractice.com/index.php
+2. Click on sign in link.
+3. Enter your email address in 'Create and account' section.
+4. Click on Create an Account button.
+5. Enter your Personal Information, Address and Contact info.
+6. Click on Register button.
+7. Validate that user is created.
+

@@ -1,0 +1,167 @@
+Actions class:
+=======================
+Methods:
+
+# perform()-- action inteface
+
+# Mouse Actions in Selenium:
+click(): Performs left-click on the mouse
+doubleClick(): Performs double click on the element
+clickAndHold(): Performs long click on the mouse without releasing it
+dragAndDrop(): Drags the element from one point and drops to another
+moveToElement(): Shifts the mouse pointer to the center of the element
+contextClick(): Performs right-click on the mouse
+
+#Keyboard Actions in Selenium:
+sendKeys(): Sends a series of keys to the element
+keyUp(): Performs key release
+keyDown(): Performs keypress without release
+
+======================================================
+2.contextClick():Right click operation
+Ex. write a script to right click on element & select inspect element operation
+i. url: https://demo.guru99.com/test/simple_context_menu.html
+package actionsClass;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class ContextClick {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		driver.manage().window().maximize();
+		
+		WebElement button = driver.findElement(By.xpath("//*[text()='right click me']"));
+		
+		// actions class
+		
+		Actions act=new Actions(driver);
+		act.moveToElement(button).perform();
+		
+		// right click
+		
+		act.contextClick().perform();
+		
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//*[text()='Edit']")).click();
+		
+		Thread.sleep(2000);
+		
+
+		
+		
+	}
+
+}
+========================================
+
+# build vs perform
+-----------------------
+-build():used to combining multiple actions in sibgle statement and then execute one by one
+-perform(): use to each action seperatlty
+==========================================
+
+3. Double click():
+ 
+package actionsClass;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class DoubleClick {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://demo.guru99.com/test/simple_context_menu.html");
+		driver.manage().window().maximize();
+		
+		WebElement dobleClickButton = driver.findElement(By.xpath("//*[text()='Double-Click Me To See Alert']"));
+		
+		// actions class
+		
+		Actions act=new Actions(driver);
+		act.moveToElement(dobleClickButton).perform();
+		
+		// once double click on button the alert popup should open
+		
+		act.doubleClick().perform();
+		
+	}
+
+}
+=================================
+4. Drag and drop
+
+package actionsClass;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class DragAndDrop {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://formy-project.herokuapp.com/dragdrop");
+		driver.manage().window().maximize();
+		
+		WebElement source = driver.findElement(By.xpath("//img[@src=\"/assets/selenium-logo-c1d6f4654a0c8f8bef745f71b4e22836224aabc2116f405ef511cd79c48f2947.png\"]"));
+		WebElement dest = driver.findElement(By.xpath("//*[@class=\"ui-widget-header ui-droppable\"]"));
+		
+		
+		// Method1: (without drag and drop)
+		
+		Actions act=new Actions(driver);
+//		act.moveToElement(source).perform();
+//		Thread.sleep(2000);
+//		
+//		act.clickAndHold().perform();
+//		Thread.sleep(2000);
+//		
+//		act.moveToElement(dest).perform();
+//		Thread.sleep(2000);
+//		
+//		act.release().perform();
+		
+		// Method-2-- combine and build() method
+		act.moveToElement(source).clickAndHold().moveToElement(dest).release().build().perform();
+		
+		
+		//method-2 : using drag and drop
+		
+		//act.dragAndDrop(source, dest).perform();
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

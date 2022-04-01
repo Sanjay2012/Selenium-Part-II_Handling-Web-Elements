@@ -1,0 +1,12 @@
+<html>
+         <body>
+                     <Select name=“Country”>
+                     <option value=“USD”>United States</options>
+                     <option value=“GBU”>United Kingdom</options>
+                     <option value=“CAD”>Canada</options>
+                     <option value=“BZL”>Brazil</options>
+                     <option value=“AUD”>Australia</option>
+                     </Select>
+         </body>
+
+  </html>

@@ -1,0 +1,180 @@
+Handling POP UPs
+====================
+- POP ups are small/seperate window which will be displayed when we performed 
+action on any componenet present in webpage.
+- Elements available in pop up are inpectable
+- We cannot able to inpect the element present in popups
+
+# types of popups
+-------------
+1. Hidden division popup
+2.** Alert Popup
+3.** Child browser popup
+4. Authentication popup
+5. File upload
+6. File download
+----------------------
+
+1. Hidden division popup
+- colorfull
+- we can inspect
+- switchTo()--no need
+- we can handle this pop up directly
+- ex. https://www.flipkart.com/
+- pop ups on flipkarts 
+
+===================
+2.** Alert Popup
+- we cannot inspect the elements
+-buttons: Ok/Cancel/text
+- sometimes ? / !
+- https://demoqa.com/alerts
+- Alert is an interface which contains some static method
+
+-# procedure:
+i.switch selenium focous from main page to alert popup
+  Alert alt=driver.switchTo().alert();
+ii. We need to use Alert interface methods as per buttons/elements present in popup
+	- click on Ok button: alt.accept();
+	- click on Cancel button: alt.dismiss();
+	- to get text : alt.getText();
+
+
+--------------------------
+3.** Child browser popup
+- elements are inspectable
+- address filed: url, maximize, minimize, close
+#Procedure:
+1. swich focous from main page to child browser popup
+   driver.switchTo().window("child/main id")--> address/id
+2. to get address/id of main page we need to use syntax
+ Srting idMainPage=driver.getWindowHandle();
+sop(idMainPage);
+
+So, return type is String
+
+3. if to get address/id of main page as well as child browsers
+	set<Srting> ids=driver.getWindowHandles();
+        sop(ids);--- wrong
+4. how to get address of main page and child browser
+- use arraylist
+
+set<Srting> ids=driver.getWindowHandles();
+ArrayList al=new ArrayList(ids)
+
+sop(al.get(0));---> address of main page
+sop(al.get(1));---> address of child browswr page
+
+
+https://skpatro.github.io/demo/links/
+
+-------------------------------------------------------
+package handlingPopups;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ClickOnOk {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://demoqa.com/alerts");
+		driver.manage().window().maximize();
+		
+		//driver.findElement(By.xpath("//*[@id=\"alertButton\"]")).click();
+		
+		driver.findElement(By.xpath("//*[@id=\"confirmButton\"]")).click();
+		
+		Thread.sleep(3000);
+		
+		// switch the focous from main page to Alert popup
+		
+		Alert alt = driver.switchTo().alert();
+		
+		// click on ok button
+		
+		//alt.accept();
+		alt.dismiss();
+		
+
+	}
+
+}
+----------------------------------------------
+package handlingPopups;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ChildBrowserPopUp {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver=new ChromeDriver();
+		
+		driver.get("https://skpatro.github.io/demo/links/");
+		driver.manage().window().maximize();
+		
+		WebElement newWindowButton = driver.findElement(By.xpath("//*[@name=\"NewWindow\"]"));
+		newWindowButton.click();
+		
+		Set<String> ids = driver.getWindowHandles();
+		
+		// convert set type into list
+		
+		ArrayList<String> al = new ArrayList<String>(ids);
+		
+		
+		// id of main page
+		String idOfMainPage = al.get(0);
+		System.out.println("address/id of main page:  "+idOfMainPage);
+		
+		// child id
+		String idOfChild = al.get(1);
+		System.out.println("address/id of child browser page :  "+idOfChild);
+		
+		
+		// switch focus to child popup
+		
+		driver.switchTo().window(idOfChild);
+		Thread.sleep(3000);
+		
+		driver.manage().window().maximize();
+		
+		// click om home menu
+		
+		driver.findElement(By.xpath("//*[text()='HOME']")).click();
+		
+		Thread.sleep(3000);
+		
+		
+		//Switch to main page
+		driver.switchTo().window(idOfMainPage);
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//*[@name=\"home\"]")).click();
+		
+		
+		
+
+	}
+
+}
+
+
+
+
+
+
+
+
+

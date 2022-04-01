@@ -1,0 +1,48 @@
+<html>
+<body>
+r1<input type='radio'></br>
+r2<input type='radio'></br>
+r3<input type='radio'></br>
+r4<input type='radio'></br>
+r5<input type='radio'></br>
+r6<input type='radio'></br>
+r7<input type='radio'></br>
+r8<input type='radio'></br>
+r9<input type='radio'></br>
+r10<input type='radio'></br>
+</body>
+</html>
+
+
+=======================================
+
+package webtable;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class ClickOnRadioButtons {
+
+	public static void main(String[] args) throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "D:\\Softwares\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+
+		driver.get("file:///D:/MindMAPS/Automation/radioButtons.html");
+		driver.manage().window().maximize();
+		
+		List<WebElement> allRadioButtons = driver.findElements(By.xpath("//input[@type='radio']"));
+		
+		for (WebElement ele : allRadioButtons) {
+			ele.click();
+			
+			Thread.sleep(2000);
+			
+		}
+
+	}
+
+}
